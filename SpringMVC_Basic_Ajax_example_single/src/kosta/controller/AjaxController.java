@@ -28,6 +28,7 @@ public class AjaxController {
 	//org.springframework.web.servlet.view.json.MappingJackson2JsonView
 	@Autowired
 	private View jsonview;
+	
 	@Autowired
 	private EmpService empservice;
 	
