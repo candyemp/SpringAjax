@@ -17,12 +17,9 @@
 							url  : "response.ajax",
 							success : function(data){  //서버 {"menu",list}   //data > {}
 								console.log(data);
-								
-								//var jsonData = JSON.parse(data);
-								
-								JsonObject jsonObject = (JsonObject) jsonParser.parse(jsonData);
+								var jsonData = JSON.parse(data);
 				
-								console.log(jsonObject);
+								console.log(jsonData);
 								$('#menuView').empty();
 								var opr="<table border='1px'><tr>Response객체</tr><tr>"+
 								    "<th>EMPNO</th>"+
@@ -34,7 +31,7 @@
 					            	"<th>COMM</th>"+
 					            	"<th>DEPTNO</th>"+
 					            	"<th>EDIT</th><th>DELETE</th></tr>";
-								$.each(jsonObject.emp,function(index,emp){
+								$.each(jsonData,function(index,emp){
 									opr += "<tr><th>"+emp.empno+
 									"</th><th>"+emp.ename+
 									"</th><th>"+emp.job+
@@ -61,6 +58,8 @@
 							url  : "objMapper.ajax",
 							success : function(data){  //서버 {"menu",list}   //data > {}
 								console.log(data);
+								var jsonData = JSON.parse(data);
+								console.log(jsonData);
 								$('#menuView').empty();
 								var opr="<table border='1px'><tr>ObjectMapper</tr><tr>"+
 								    "<th>EMPNO</th>"+
@@ -72,7 +71,7 @@
 					            	"<th>COMM</th>"+
 					            	"<th>DEPTNO</th>"+
 					            	"<th>EDIT</th><th>DELETE</th></tr>";
-								$.each(data.emp,function(index,emp){
+								$.each(jsonData,function(index,emp){
 									opr += "<tr><th>"+emp.empno+
 									"</th><th>"+emp.ename+
 									"</th><th>"+emp.job+
@@ -110,7 +109,7 @@
 					            	"<th>COMM</th>"+
 					            	"<th>DEPTNO</th>"+
 					            	"<th>EDIT</th><th>DELETE</th></tr>";
-								$.each(data.emp,function(index,emp){
+								$.each(data,function(index,emp){
 									opr += "<tr><th>"+emp.empno+
 									"</th><th>"+emp.ename+
 									"</th><th>"+emp.job+

@@ -33,22 +33,24 @@ public class AjaxController {
 	
 	@RequestMapping(value="response.ajax")
 	public void ajaxResponse(HttpServletResponse response){
-		String empJson="{\"emp\":[";
+		String empJson="[";
 		
 		List<EmpDto> list = empservice.getEmpList();
 		for(int i=0;i<list.size();i++) {
-			empJson += 
-            "{empno:\""+list.get(i).getEmpno()
-            +"\",ename:\""+list.get(i).getEname()
-            +"\",job:\""+list.get(i).getJob()
-            +"\",mgr:\""+list.get(i).getMgr()
-            +"\",hiredate:\""+list.get(i).getHiredate()
-            +"\",sal:\""+list.get(i).getSal()
-            +"\",comm:\""+list.get(i).getComm()
-            +"\",deptno:\""+list.get(i).getDeptno()+"\"},";
-			
+			  empJson +=
+			           "{\"empno\":\""+list.get(i).getEmpno()
+			           +"\",\"ename\":\""+list.get(i).getEname()
+			           +"\",\"job\":\""+list.get(i).getJob()
+			           +"\",\"mgr\":\""+list.get(i).getMgr()
+			           +"\",\"hiredate\":\""+list.get(i).getHiredate()
+			           +"\",\"sal\":\""+list.get(i).getSal()
+			           +"\",\"comm\":\""+list.get(i).getComm()
+			           +"\",\"deptno\":\""+list.get(i).getDeptno()+"\"}";
+			            if(i!=list.size()-1) {
+			                empJson+=",";
+			            }
 		}
-		empJson += "]}";
+		empJson += "]";
 		try {
 			response.getWriter().print(empJson);
 		} catch (Exception e) {
