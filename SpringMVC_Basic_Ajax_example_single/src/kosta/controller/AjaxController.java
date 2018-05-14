@@ -19,6 +19,7 @@ import org.springframework.web.servlet.View;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.EmpDao;
 import dto.EmpDto;
 import service.EmpService;
 
@@ -89,5 +90,13 @@ public class AjaxController {
 		
 		return jsonview;  //private View jsonview 타입으로 리턴
 	}
+	
+	@RequestMapping(value="delete.ajax")
+	public int delete(String empno) {
+		System.out.println(empno);
+		return empservice.deleteEmp(empno);
+	}
+	
+	
 			
 }

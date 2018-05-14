@@ -33,7 +33,6 @@ public class AjaxRestController {
 	public List<EmpDto> ajaxResponseBody(){
 	
 		List<EmpDto> list = empservice.getEmpList();
-		
 		return list;  
 	}
 	

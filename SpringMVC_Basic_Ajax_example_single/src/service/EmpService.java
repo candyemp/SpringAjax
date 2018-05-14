@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import dao.EmpDao;
 import dto.EmpDto;
@@ -18,11 +19,17 @@ public class EmpService {
 	private SqlSession sqlsession;
 	
 	public List<EmpDto> getEmpList(){
-		System.out.println("getEmpList");
 		List<EmpDto> result = new ArrayList<>();
 		EmpDao dao = sqlsession.getMapper(EmpDao.class);
 		result = dao.getEmpList();
 		return result;
+	}
+	
+	
+	public int deleteEmp(String empno) {
+		EmpDao empDao = sqlsession.getMapper(EmpDao.class);
+		System.out.println(empDao);
+		return empDao.deleteEmp(empno);
 	}
 	
 }

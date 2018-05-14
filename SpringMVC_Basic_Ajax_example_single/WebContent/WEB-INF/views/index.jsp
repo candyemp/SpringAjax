@@ -10,9 +10,23 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			
+			function deleteEmp(){ 
+				$('.delete').on('click', function() {
+				$.ajax({
+					type : "post",
+					url  : "delete.ajax",
+					data : {empno : $(this).attr("value2")},
+					success : function(){ 
+						
+					} 
+				})
+			});
+			}
+			
+			//Json 전용
 			function createTable(data, way){
 				$('#menuView').empty();
-				var opr="<fieldset> <legend>"+way+"</legend></fieldset><br><table border='1px'><tr>"+
+				var opr="<table border='1px'><tr>"+way+"</tr><tr>"+
 				    "<th>EMPNO</th>"+
 	            	"<th>ENAME</th>"+
 	            	"<th>JOB</th>"+
@@ -37,18 +51,46 @@
 				$('#menuView').append(opr);
 			}
 			
+			//Xml 전용
+			function createxmlTable(data, way){
+				$('#menuView').empty();
+				var opr="<table border='1px'><tr>"+way+"</tr><tr>"+
+				    "<th>EMPNO</th>"+
+	            	"<th>ENAME</th>"+
+	            	"<th>JOB</th>"+
+	            	"<th>MGR</th>"+
+	            	"<th>HIREDATE</th>"+
+	            	"<th>SAL</th>"+
+	            	"<th>COMM</th>"+
+	            	"<th>DEPTNO</th>"+
+	            	"<th>EDIT</th><th>DELETE</th></tr>";
+				$.each(data,function(){
+					opr += "<tr><th>"+$(this).find('empno').text()+
+					"</th><th>"+$(this).find('ename').text()+
+					"</th><th>"+$(this).find('job').text()+
+					"</th><th>"+$(this).find('mgr').text()+
+					"</th><th>"+$(this).find('hiredate').text()+
+					"</th><th>"+$(this).find('sal').text()+
+					"</th><th>"+$(this).find('comm').text()+
+					"</th><th>"+$(this).find('deptno').text()+
+					"</th><th><input type='button' value='수정' class ='update'  value2="+$(this).find('empno').text()+
+					"></th><th><input type='button' value='삭제' class ='delete' value2="+$(this).find('empno').text()+"></th></tr>";
+				});
+				$('#menuView').append(opr);
+			}
+			
 			$('#responseBtn').click(function(){
 				 $.ajax(
 						 {  
 							type : "post",
 							url  : "response.ajax",
 							success : function(data){ 
-								console.log(data);
 								var jsonData = JSON.parse(data);
 								createTable(jsonData, "response객체");
+								deleteEmp();
 							} 
 						 } 
-				       )    
+				       )  
 			});
 			
 			$('#objMapperBtn').click(function(){
@@ -57,12 +99,12 @@
 							type : "post",
 							url  : "objMapper.ajax",
 							success : function(data){  
-								console.log(data);
 								var jsonData = JSON.parse(data);
 								createTable(jsonData, "ObjectMapper");
-								
+								deleteEmp();
 							} 
-						 } 
+						 }
+						 	
 				       )    
 			});
 			
@@ -73,6 +115,7 @@
 							url  : "responseBody.ajax",
 							success : function(data){  
 								createTable(data, "@ResponseBody");
+								deleteEmp();
 							} 
 						 } 
 				       )    
@@ -85,6 +128,7 @@
 							url  : "json.ajax",
 							success : function(data){  
 								createTable(data.emp, "JsonView");
+								deleteEmp();
 							} 
 						 } 
 				       )    
@@ -97,21 +141,47 @@
 							url  : "restcon.ajax",
 							success : function(data){  
 								createTable(data, "@Restcontroller");
+								deleteEmp();
 							} 
 						 } 
 				       )    
 			});
 			
+			$('#xmlBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "xmllist.ajax",
+							datatype : "xml",
+							success : function(data){  
+								createxmlTable($(data).find('emplist').find('emp'),"XML");
+								deleteEmp();
+							} 
+						 }
+				       )    
+			});
+			
+			
+			
 		});
+		
+		
 	
 	</script>
 </head>
 <body>
+<fieldset>
+	<legend>JSON</legend>
 	<input type="button" value="Response" id="responseBtn">
 	<input type="button" value="ObjectMapper" id="objMapperBtn">
 	<input type="button" value="ResponseBody" id="responseBodyBtn">
 	<input type="button" value="JsonView" id="ajaxBtn">
 	<input type="button" value="RestController" id="restconBtn">
+</fieldset>
+<fieldset>
+	<legend>XML</legend>
+	<input type="button" value="Xml" id="xmlBtn">
+</fieldset>
 	<hr>
 	<span id="menuView"></span>
 </body>
