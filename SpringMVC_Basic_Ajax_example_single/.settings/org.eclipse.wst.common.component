@@ -4,6 +4,6 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="java-output-path" value="/SpringMVC_Basic08_Security_Annotation/build/classes"/>
-        <property name="context-root" value="SpringMVC_Basic08_Security_Annotation"/>
+        <property name="context-root" value="SpringMVC_Basic_Ajax_example_single"/>
     </wb-module>
 </project-modules>

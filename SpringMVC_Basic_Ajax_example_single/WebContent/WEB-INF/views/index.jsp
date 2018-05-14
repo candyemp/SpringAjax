@@ -10,19 +10,9 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			
-			function deleteEmp(){ 
-				$('.delete').on('click', function() {
-				$.ajax({
-					type : "post",
-					url  : "delete.ajax",
-					data : {empno : $(this).attr("value2")},
-					success : function(){ 
-						
-					} 
-				})
+			$('.delete').on('click', function() {
+				console.log("dddd");
 			});
-			}
-			
 			//Json 전용
 			function createTable(data, way){
 				$('#menuView').empty();
@@ -87,7 +77,7 @@
 							success : function(data){ 
 								var jsonData = JSON.parse(data);
 								createTable(jsonData, "response객체");
-								deleteEmp();
+								
 							} 
 						 } 
 				       )  
@@ -101,7 +91,6 @@
 							success : function(data){  
 								var jsonData = JSON.parse(data);
 								createTable(jsonData, "ObjectMapper");
-								deleteEmp();
 							} 
 						 }
 						 	
@@ -115,7 +104,6 @@
 							url  : "responseBody.ajax",
 							success : function(data){  
 								createTable(data, "@ResponseBody");
-								deleteEmp();
 							} 
 						 } 
 				       )    
@@ -155,15 +143,25 @@
 							datatype : "xml",
 							success : function(data){  
 								createxmlTable($(data).find('emplist').find('emp'),"XML");
-								deleteEmp();
 							} 
 						 }
 				       )    
 			});
 			
 			
+		/* 
+			function deleteEmp(){	
+				$.ajax({
+					type : "post",
+					url  : "delete.ajax",
+					data : {empno : $(this).attr("value2")},
+					success : function(data){ 
+						createTable(data.emp, "JsonView");
+					} 
+				})
 			
-		});
+			}			 */
+		})
 		
 		
 	

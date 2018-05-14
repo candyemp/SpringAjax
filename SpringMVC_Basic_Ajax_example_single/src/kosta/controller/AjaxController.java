@@ -92,9 +92,12 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="delete.ajax")
-	public int delete(String empno) {
-		System.out.println(empno);
-		return empservice.deleteEmp(empno);
+	
+	public View delete(String empno,Model model) {
+		empservice.deleteEmp(empno);
+		List<EmpDto> list = empservice.getEmpList();
+		model.addAttribute("emp", list);
+		return jsonview;
 	}
 	
 	
