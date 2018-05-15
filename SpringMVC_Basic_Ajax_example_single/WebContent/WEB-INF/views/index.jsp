@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		
 		$(document).ready(function(){
@@ -20,6 +20,10 @@
 						createTable(data.emp, "삭제완료");
 					} 
 				})
+			});
+			
+			$(document).on("click",".update",function(){
+				console.log($(this));
 			});
 
 			
@@ -163,6 +167,7 @@
 	</script>
 </head>
 <body>
+<div class="container-fluid">
 <div class="row">
 <div class="col-sm-6">
 <fieldset>
@@ -179,6 +184,7 @@
 	<legend>XML</legend>
 	<input type="button" value="Xml" id="xmlBtn">
 </fieldset>
+</div>
 </div>
 </div>
 	<hr>
