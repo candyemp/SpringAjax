@@ -6,11 +6,105 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+	      
+	
 	<script type="text/javascript">
 		
 		$(document).ready(function(){
 			
+			//response객체방식 ajax
+			$('#responseBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "response.ajax",
+							success : function(data){ 
+								console.log(data);
+								var jsonData = JSON.parse(data);
+								createTable(jsonData, "response객체");
+							} 
+						 } 
+				       )  
+			});
+			
+			//objectmapper방식 ajax
+			$('#objMapperBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "objMapper.ajax",
+							success : function(data){  
+								console.log(data);
+								var jsonData = JSON.parse(data);
+								createTable(jsonData, "ObjectMapper");
+							} 
+						 }
+						 	
+				       )    
+			});
+			
+			//@responsebody방식 ajax
+			$('#responseBodyBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "responseBody.ajax",
+							success : function(data){
+								console.log(data);
+								createTable(data, "@ResponseBody");
+							} 
+						 } 
+				       )    
+			});
+			
+			//jasonview방식 ajax
+			$('#ajaxBtn').click(function(){
+				 $.ajax(
+						 { 
+							type : "post",
+							url  : "json.ajax",
+							success : function(data){ 
+								console.log(data);
+								createTable(data.emp, "JsonView");
+							} 
+						 } 
+				       )    
+			});
+			
+			//@restcontroller방식 ajax
+			$('#restconBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "restcon.ajax",
+							success : function(data){ 
+								console.log(data);
+								createTable(data, "@Restcontroller");
+							} 
+						 } 
+				       )    
+			});
+			
+			//xml 형식 ajax
+			$('#xmlBtn').click(function(){
+				 $.ajax(
+						 {  
+							type : "post",
+							url  : "xmllist.ajax",
+							datatype : "xml",
+							success : function(data){
+								console.log(data);
+								createxmlTable($(data).find('emplist').find('emp'),"XML");
+							} 
+						 }
+				       )    
+			});
+			//삭제
 			$(document).on("click",".delete",function(){
 				$.ajax({
 					type : "post",
@@ -21,152 +115,187 @@
 					} 
 				})
 			});
-			
-			$(document).on("click",".update",function(){
-				console.log($(this));
-			});
-
-			
-			//Json 전용
-			function createTable(data, way){
-				$('#menuView').empty();
-				var opr="<table border='1px'><tr>"+way+"</tr><tr>"+
-				    "<th>EMPNO</th>"+
-	            	"<th>ENAME</th>"+
-	            	"<th>JOB</th>"+
-	            	"<th>MGR</th>"+
-	            	"<th>HIREDATE</th>"+
-	            	"<th>SAL</th>"+
-	            	"<th>COMM</th>"+
-	            	"<th>DEPTNO</th>"+
-	            	"<th>EDIT</th><th>DELETE</th></tr>";
-				$.each(data,function(index,emp){
-					opr += "<tr><th>"+emp.empno+
-					"</th><th>"+emp.ename+
-					"</th><th>"+emp.job+
-					"</th><th>"+emp.mgr+
-					"</th><th>"+emp.hiredate+
-					"</th><th>"+emp.sal+
-					"</th><th>"+emp.comm+
-					"</th><th>"+emp.deptno+
-					"</th><th><input type='button' value='수정' class ='update'  value2="+emp.empno+
-					"></th><th><input type='button' value='삭제' class ='delete' value2="+emp.empno+"></th></tr>";
-				});
-				$('#menuView').append(opr);
-			}
-			
-			//Xml 전용
-			function createxmlTable(data, way){
-				$('#menuView').empty();
-				var opr="<table border='1px'><tr>"+way+"</tr><tr>"+
-				    "<th>EMPNO</th>"+
-	            	"<th>ENAME</th>"+
-	            	"<th>JOB</th>"+
-	            	"<th>MGR</th>"+
-	            	"<th>HIREDATE</th>"+
-	            	"<th>SAL</th>"+
-	            	"<th>COMM</th>"+
-	            	"<th>DEPTNO</th>"+
-	            	"<th>EDIT</th><th>DELETE</th></tr>";
-				$.each(data,function(){
-					opr += "<tr><th>"+$(this).find('empno').text()+
-					"</th><th>"+$(this).find('ename').text()+
-					"</th><th>"+$(this).find('job').text()+
-					"</th><th>"+$(this).find('mgr').text()+
-					"</th><th>"+$(this).find('hiredate').text()+
-					"</th><th>"+$(this).find('sal').text()+
-					"</th><th>"+$(this).find('comm').text()+
-					"</th><th>"+$(this).find('deptno').text()+
-					"</th><th><input type='button' value='수정' class ='update'  value2="+$(this).find('empno').text()+
-					"></th><th><input type='button' value='삭제' class ='delete' value2="+$(this).find('empno').text()+"></th></tr>";
-				});
-				$('#menuView').append(opr);
-			}
-			
-			$('#responseBtn').click(function(){
-				 $.ajax(
-						 {  
-							type : "post",
-							url  : "response.ajax",
-							success : function(data){ 
-								var jsonData = JSON.parse(data);
-								createTable(jsonData, "response객체");
-								
-							} 
-						 } 
-				       )  
-			});
-			
-			$('#objMapperBtn').click(function(){
-				 $.ajax(
-						 {  
-							type : "post",
-							url  : "objMapper.ajax",
-							success : function(data){  
-								var jsonData = JSON.parse(data);
-								createTable(jsonData, "ObjectMapper");
-							} 
-						 }
-						 	
-				       )    
-			});
-			
-			$('#responseBodyBtn').click(function(){
-				 $.ajax(
-						 {  
-							type : "post",
-							url  : "responseBody.ajax",
-							success : function(data){  
-								createTable(data, "@ResponseBody");
-							} 
-						 } 
-				       )    
-			});
-			
-			$('#ajaxBtn').click(function(){
-				 $.ajax(
-						 { 
-							type : "post",
-							url  : "json.ajax",
-							success : function(data){  
-								createTable(data.emp, "JsonView");
-							} 
-						 } 
-				       )    
-			});
-			
-			$('#restconBtn').click(function(){
-				 $.ajax(
-						 {  
-							type : "post",
-							url  : "restcon.ajax",
-							success : function(data){  
-								createTable(data, "@Restcontroller");
-							} 
-						 } 
-				       )    
-			});
-			
-			$('#xmlBtn').click(function(){
-				 $.ajax(
-						 {  
-							type : "post",
-							url  : "xmllist.ajax",
-							datatype : "xml",
-							success : function(data){  
-								createxmlTable($(data).find('emplist').find('emp'),"XML");
-							} 
-						 }
-				       )    
-			});
-			
 		})
 		
+		//수정 폼
+		function empupdate(me){
+				var tr = $(me).closest('tr')
+				var datas = {empno:tr.children().html()};
+				tr.empty();
+				
+				$.ajax({
+					type : "get",
+					url:"update.ajax",
+					data:datas,
+					success : function(data) {
+					 	var td = "<td><input type='text' value='"+data.emp.empno +"' readonly></td>";
+							td +="<td><input type='text' value='"+data.emp.ename +"'></td>";
+							td +="<td><input type='text' value='"+data.emp.job +"'></td>";
+							td +="<td><input type='text' value='"+data.emp.mgr +"'></td>";
+							td +="<td><input type='text' value='"+data.emp.hiredate.substring(0,10) +"' readonly></td>";
+							td +="<td><input type='text' value='"+data.emp.sal +"'></td>";
+							td +="<td><input type='text' value='"+data.emp.comm +"'></td>";
+							td +="<td><input type='text' value='"+data.emp.deptno +"'></td>";
+							td +="<td colspan='2'><input type='button'onclick='empupdateconfirm(this)' value='완료' value2="+data.emp.empno+" /></td>";
+							$(tr).append(td); 
+					}
+				})
+			}
 		
+		
+		function empupdateconfirm(me){			
+			empupdateok(me);
+		}
+		//수정 처리
+		function empupdateok(me){
+			var tr = $(me).closest('tr');
+			var data = {empno:tr.find("td:eq(0)").children().val(),
+						ename:tr.find("td:eq(1)").children().val(),
+						job:tr.find("td:eq(2)").children().val(),
+						mgr:tr.find("td:eq(3)").children().val(),
+						hiredate:tr.find("td:eq(4)").children().val(),
+						sal:tr.find("td:eq(5)").children().val(),
+						comm:tr.find("td:eq(6)").children().val(),
+						deptno:tr.find("td:eq(7)").children().val(),
+					   };
+			$.ajax({
+				type : "post",
+				url:"update.ajax",
+				data:data,
+				success : function(data){  
+					createTable(data.emp, "수정완료");
+				} 
+			})
+		}
+		
+		//Json 전용 table 생성
+		function createTable(data, way){
+			$('#menuView').empty();
+			var opr="<table id='fresh-table' class='table'><tr>"+way+"</tr><thead><tr>"+
+			    "<th>EMPNO</th>"+
+            	"<th>ENAME</th>"+
+            	"<th>JOB</th>"+
+            	"<th>MGR</th>"+
+            	"<th>HIREDATE</th>"+
+            	"<th>SAL</th>"+
+            	"<th>COMM</th>"+
+            	"<th>DEPTNO</th>"+
+            	"<th>EDIT</th><th>DELETE</th></tr></thead><tbody>";
+			$.each(data,function(index,emp){
+				opr += "<tr><td>"+emp.empno+
+				"</td><td>"+emp.ename+
+				"</td><td>"+emp.job+
+				"</td><td>"+emp.mgr+
+				"</td><td>"+emp.hiredate.substring(0,10)+
+				"</td><td>"+emp.sal+
+				"</td><td>"+emp.comm+
+				"</td><td>"+emp.deptno+
+				"</td><td><input type='button' onclick='empupdate(this)' value='수정' class ='update'  value2="+emp.empno+
+				"></td><td><input type='button' value='삭제' class ='delete' value2="+emp.empno+"></td></tr>";
+			});
+			opr+="<tr><td colspan='10'><input type='button' onclick='createinput(this)' value='추가'></td></tr></tbody></table>";
+			$('#menuView').append(opr);
+		}
+		
+		//Xml 전용  table 생성
+		function createxmlTable(data, way){
+			$('#menuView').empty();
+			var opr="<table id='fresh-table' class='table'><tr>"+way+"</tr><thead><tr>"+
+			    "<th>EMPNO</th>"+
+            	"<th>ENAME</th>"+
+            	"<th>JOB</th>"+
+            	"<th>MGR</th>"+
+            	"<th>HIREDATE</th>"+
+            	"<th>SAL</th>"+
+            	"<th>COMM</th>"+
+            	"<th>DEPTNO</th>"+
+            	"<th>EDIT</th><th>DELETE</th></tr></thead><tbody>";
+			$.each(data,function(){
+				opr += "<tr><td>"+$(this).find('empno').text()+
+				"</td><td>"+$(this).find('ename').text()+
+				"</td><td>"+$(this).find('job').text()+
+				"</td><td>"+$(this).find('mgr').text()+
+				"</td><td>"+$(this).find('hiredate').text().substring(0,10)+
+				"</td><td>"+$(this).find('sal').text()+
+				"</td><td>"+$(this).find('comm').text()+
+				"</td><td>"+$(this).find('deptno').text()+
+				"</td><td><input type='button' onclick='empupdate(this)' value='수정' class ='update'  value2="+$(this).find('empno').text()+
+				"></td><td><input type='button' value='삭제' class ='delete' value2="+$(this).find('empno').text()+"></td></tr>";
+			});
+			opr+="<tr><td colspan='10'><input type='button' onclick='createinput(this)' value='추가'></td></tr></tbody></table>";
+			$('#menuView').append(opr);
+		}
+		
+		//등록 폼
+		function createinput(me){
+			var tr = $(me).closest('tr');
+			tr.empty();
+			var td = "<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='text'></td>";
+			td +="<td><input type='button'onclick='empinsert(this)' value='완료'/></td>";
+			td +="<td><input type='button'onclick='cancel(this)' value='취소'/></td>";
+			$(tr).append(td); 
+		
+		}
+		
+		//취소버튼
+		function cancel(me){
+			var tr = $(me).closest('tr');
+			tr.empty();
+			tr.append("<td colspan='10'><input type='button' onclick='createinput(this)' value='추가'></td>");
+			
+		}
+		//등록 처리
+		function empinsert(me){
+			var tr = $(me).closest('tr');
+			var data = {empno:tr.find("td:eq(0)").children().val(),
+						ename:tr.find("td:eq(1)").children().val(),
+						job:tr.find("td:eq(2)").children().val(),
+						mgr:tr.find("td:eq(3)").children().val(),
+						hiredate:tr.find("td:eq(4)").children().val(),
+						sal:tr.find("td:eq(5)").children().val(),
+						comm:tr.find("td:eq(6)").children().val(),
+						deptno:tr.find("td:eq(7)").children().val(),
+					   };
+			$.ajax({
+				type : "post",
+				url:"insert.ajax",
+				data:data,
+				success : function(data){  
+					createTable(data.emp, "추가");
+				} 
+			})
+		}
 	
 	</script>
+		 <style>
+table {
+	border-collapse: collapse; /* 붕괴하다 , 무너지다 */
+	width: 100%;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+	text-align: center;
+}
+input[type="text"]{
+	width: 50%;
+}
+
+</style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="fresh-table toolbar-color-azure full-screen-table" style="align-content: center;">
 <div class="container-fluid">
 <div class="row">
 <div class="col-sm-6">
@@ -188,6 +317,10 @@
 </div>
 </div>
 	<hr>
-	<span id="menuView"></span>
+	
+		<span id="menuView"></span>
+	</div>
+</div>
+	
 </body>
 </html>

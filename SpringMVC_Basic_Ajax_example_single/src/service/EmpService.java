@@ -32,4 +32,20 @@ public class EmpService {
 		return empDao.deleteEmp(empno);
 	}
 	
+	public int updateEmp(EmpDto empdto) {
+		EmpDao empDao = sqlsession.getMapper(EmpDao.class);
+		System.out.println(empDao);
+		return empDao.updateEmp(empdto);
+	}
+	
+	public EmpDto selectEmp(String empno) {
+		EmpDao empDao = sqlsession.getMapper(EmpDao.class);
+		System.out.println(empDao);
+		return  empDao.selectEmp(empno);
+	}
+	public int insertEmp(EmpDto dto) {
+		EmpDao empDao = sqlsession.getMapper(EmpDao.class);
+		return  empDao.insertEmp(dto);
+	}
+	
 }

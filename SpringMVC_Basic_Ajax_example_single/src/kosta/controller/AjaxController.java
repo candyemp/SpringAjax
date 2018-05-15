@@ -1,7 +1,5 @@
 package kosta.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -9,17 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.View;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.EmpDao;
 import dto.EmpDto;
 import service.EmpService;
 
@@ -100,6 +94,30 @@ public class AjaxController {
 		return jsonview;
 	}
 	
+	
+	@RequestMapping(value="update.ajax",method=RequestMethod.GET)
+	public View update(String empno, Model model){
+		model.addAttribute("emp",empservice.selectEmp(empno));
+		
+		return jsonview;  
+	}
+	
+	@RequestMapping(value="update.ajax",method=RequestMethod.POST)
+	public View update(EmpDto empdto, Model model){
+		empservice.updateEmp(empdto);
+		List<EmpDto> list = empservice.getEmpList();
+		model.addAttribute("emp", list);
+		
+		return jsonview;  
+	}
+	
+	@RequestMapping(value="insert.ajax",method=RequestMethod.POST)
+	public View insert(EmpDto empdto, Model model){
+		empservice.insertEmp(empdto);
+		List<EmpDto> list = empservice.getEmpList();
+		model.addAttribute("emp", list);		
+		return jsonview;  
+	}
 	
 			
 }
