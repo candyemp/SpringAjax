@@ -163,6 +163,8 @@
 	</script>
 </head>
 <body>
+<div class="row">
+<div class="col-sm-6">
 <fieldset>
 	<legend>JSON</legend>
 	<input type="button" value="Response" id="responseBtn">
@@ -171,10 +173,14 @@
 	<input type="button" value="JsonView" id="ajaxBtn">
 	<input type="button" value="RestController" id="restconBtn">
 </fieldset>
+</div>
+<div class="col-sm-6">
 <fieldset>
 	<legend>XML</legend>
 	<input type="button" value="Xml" id="xmlBtn">
 </fieldset>
+</div>
+</div>
 	<hr>
 	<span id="menuView"></span>
 </body>
