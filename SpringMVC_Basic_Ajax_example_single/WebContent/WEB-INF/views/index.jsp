@@ -8,11 +8,21 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
+		
 		$(document).ready(function(){
 			
-			$('.delete').on('click', function() {
-				console.log("dddd");
+			$(document).on("click",".delete",function(){
+				$.ajax({
+					type : "post",
+					url  : "delete.ajax",
+					data : {empno : $(this).attr("value2")},
+					success : function(data){ 
+						createTable(data.emp, "삭제완료");
+					} 
+				})
 			});
+
+			
 			//Json 전용
 			function createTable(data, way){
 				$('#menuView').empty();
@@ -116,7 +126,6 @@
 							url  : "json.ajax",
 							success : function(data){  
 								createTable(data.emp, "JsonView");
-								deleteEmp();
 							} 
 						 } 
 				       )    
@@ -129,7 +138,6 @@
 							url  : "restcon.ajax",
 							success : function(data){  
 								createTable(data, "@Restcontroller");
-								deleteEmp();
 							} 
 						 } 
 				       )    
@@ -148,19 +156,6 @@
 				       )    
 			});
 			
-			
-		/* 
-			function deleteEmp(){	
-				$.ajax({
-					type : "post",
-					url  : "delete.ajax",
-					data : {empno : $(this).attr("value2")},
-					success : function(data){ 
-						createTable(data.emp, "JsonView");
-					} 
-				})
-			
-			}			 */
 		})
 		
 		
