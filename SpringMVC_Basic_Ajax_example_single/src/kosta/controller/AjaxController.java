@@ -85,6 +85,9 @@ public class AjaxController {
 		return jsonview;  //private View jsonview 타입으로 리턴
 	}
 	
+	
+	///////////////////////////////////////////////////////////
+	
 	@RequestMapping(value="delete.ajax")
 	
 	public View delete(String empno,Model model) {

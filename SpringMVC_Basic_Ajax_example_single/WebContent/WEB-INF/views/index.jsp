@@ -26,6 +26,8 @@
 							success : function(data){ 
 								console.log(data);
 								var jsonData = JSON.parse(data);
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>Response객체에 문자열 담기</legend><p>json형식으로 작성한 문자열을 response객체 담아 전송한다</p></fieldset>');
 								createTable(jsonData, "response객체");
 							} 
 						 } 
@@ -40,6 +42,8 @@
 							url  : "objMapper.ajax",
 							success : function(data){  
 								console.log(data);
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>ObjectMapper객체 사용하기</legend><p>객체를 json형식의 문자열로 바꿔준다</p></fieldset>');
 								var jsonData = JSON.parse(data);
 								createTable(jsonData, "ObjectMapper");
 							} 
@@ -56,6 +60,8 @@
 							url  : "responseBody.ajax",
 							success : function(data){
 								console.log(data);
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>@ResponseBody 사용하기</legend><p>메소드의 반환형 앞에 @ResponseBody를 붙여서 사용 / 해당객체가 자동으로 Json객체로 변환되어 반환</p></fieldset>');
 								createTable(data, "@ResponseBody");
 							} 
 						 } 
@@ -70,7 +76,9 @@
 							url  : "json.ajax",
 							success : function(data){ 
 								console.log(data);
-								createTable(data.emp, "JsonView");
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>jsonview 방식</legend><p>View 객체가 Json객체로 파싱되어서 넘어온다</p></fieldset>');
+								createTable(data.emp, "jsonview");
 							} 
 						 } 
 				       )    
@@ -84,6 +92,8 @@
 							url  : "restcon.ajax",
 							success : function(data){ 
 								console.log(data);
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>@RestController</legend><p>@Controller 대신 @RestController를 사용하면 자동으로 @ResponseBody가 기본으로 작동</p></fieldset>');
 								createTable(data, "@Restcontroller");
 							} 
 						 } 
@@ -99,6 +109,8 @@
 							datatype : "xml",
 							success : function(data){
 								console.log(data);
+								$('#exp').empty();
+								$('#exp').append('<fieldset><legend>XML형식</legend><p>XML 형식으로 읽기/쓰기</p></fieldset>');
 								createxmlTable($(data).find('emplist').find('emp'),"XML");
 							} 
 						 }
@@ -282,13 +294,15 @@ table {
 
 th {
 	text-align: center;
+	width: 10px;
 }
 
 td {
 	text-align: center;
+	width: 10px;
 }
 input[type="text"]{
-	width: 50%;
+	width: 60%;
 }
 
 </style>
@@ -315,10 +329,11 @@ input[type="text"]{
 </fieldset>
 </div>
 </div>
-</div>
+
 	<hr>
-	
+	<div id="exp"></div>
 		<span id="menuView"></span>
+	</div>
 	</div>
 </div>
 	
